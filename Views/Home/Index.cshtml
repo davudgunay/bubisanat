@@ -1,0 +1,103 @@
+﻿@model IEnumerable<bubisanat.Models.Post>
+@using bubisanat.Data
+@using Microsoft.EntityFrameworkCore
+@inject ApplicationDbContext context
+@{
+    ViewData["Title"] = "BubiSanat | Düşünen ve üreten herkes için bir soluklanma alanı!";
+    List<Post> posts = context.Posts.Include(p => p.Category).ToList();
+    string timespan;
+    string content;
+}
+<script>
+    function UpdateLike(postid) {
+        $.get("@Url.Action("Likes","Posts")?id=" + postid, function (likepcount) {
+            $("#likeCount-" + postid).html(likepcount);
+        });
+    }
+</script>
+
+<div class="text-center">
+    <div class="row mt-3">
+        <div class="col12 ml-auto mr-auto">
+            <div class="profile-tabs">
+                <ul class="nav nav-pills">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/?feed=genel-akis">Genel Akış</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link ahvrstl" href="/?feed=takip-ettiklerim">Takip Ettiklerim</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    @foreach (Post item in posts)
+    {
+        if (item.Content.Length<300)
+        {
+            content = item.Content;
+        }
+        else
+        {
+            content = item.Content.Substring(0, 300)+ "...";
+        }
+        TimeSpan span = (DateTime.Now - item.CreatedAt);
+        
+        if (span.Hours < 1)
+        {
+            timespan = span.Minutes.ToString() + " dakika";
+        }
+        else if (span.Days < 1)
+        {
+            timespan = span.Hours.ToString() + " saat";
+        }
+        else 
+        {
+            timespan = span.Days.ToString() + " gün";
+        }
+    <div class = "card card-nav-tabs">
+            <a class="stretched-link" asp-area="" asp-controller="Posts" asp-action="Details" asp-route-id="@item.Id"></a>
+            <div class="title card-header card-header-bubisanat">
+        <div class="display-4">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">@item.Title.Trim().ToUpper()</a>         
+        </div>
+
+        <div>
+            <a>@timespan önce</a>
+        </div>
+
+        <div>
+             <a href="" style="text-decoration:none;color:white;"><strong>Yazar: </strong>@item.Author.Name, </a>
+                    <a href="" style="text-decoration:none;color:white;"><strong>Kategori: </strong>@item.Category.Name</a>
+        </div>
+        </div>
+        @if(item.Image!=null)
+        {
+            <img src="data:image/jpeg;base64,@Convert.ToBase64String(item.Image)" />
+        }
+        <div class="item-content">
+                <a>@content</a>
+        </div>
+            <div class="card-footer">
+                <div class="card-footer-action-part" id="like-actions-97860">
+                    <a class="likes" onclick="UpdateLike(@item.Id)">
+                        <span class="img-area"><img src="https://d87rq1riteunk.cloudfront.net/assets/like-419745805fb16c199f7083f5743d4df62f890f874a1cebc261791cf43997b476.svg"></span>
+                    </a>
+                    <span id="likeCount-@item.Id.ToString()" class="count"> @item.Likes </span>
+                </div>
+                <div class="card-footer-action-part">
+                    <a href="/posts/yagliboya-50-70-cm#post-comments">
+                        <span class="img-area"><img src="https://d87rq1riteunk.cloudfront.net/assets/comment-edaee9208a5ead9d2fde550d2e65116b208b941934e11becfa640ac4b8bb1d55.svg"></span>
+                        <span class="count">0</span>
+                    </a>
+                </div>
+                <div class="card-footer-action-part">
+                    <span class="img-area"><img src="https://d87rq1riteunk.cloudfront.net/assets/visibility-7551a54d43087d0afeb8a028815cfd2ddeec7a30ec404b2ed93b462b035d75cc.svg"></span>
+                    <span class="count">@item.DisplayCount</span>
+                </div>
+                <div class="card-footer-tag">
+                </div>
+            </div>
+    </div>
+    }
+</div>

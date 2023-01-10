@@ -1,0 +1,51 @@
+﻿@model bubisanat.Models.ApplicationUser
+
+@{
+    ViewData["Title"] = "Aramıza Katılın | ";
+}
+
+<h1 style="text-align:center; font-size:25px; margin-bottom:25px;">Aramıza Katılın</h1>
+
+<div class="row">
+    <div>
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label">Kullanıcı Adı</label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div> 
+            <div class="form-group">
+                <label asp-for="Email" class="control-label">E-Posta</label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label">Parola</label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div> 
+            <div class="form-group">
+                <label asp-for="ConfirmPassword" class="control-label">Parola Doğrulama</label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" asp-for="Agreed" />Üyelik sözleşmesini kabul ediyorum
+                </label>
+            </div>
+            <div class="form-group">
+                <input style="color:#212121;" type="submit" value="Üye Ol" class="btn btn2-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+

@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Giriş Yap | ";
+}
+
+<h1 style="text-align:center; font-size:25px; margin-bottom:25px;">Giriş Yap</h1>
+
+<div class="row">
+    <div>
+        <form asp-action="Login">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label for="userName" class="control-label">E-Posta veya Kullanıcı Adı</label>
+                <input name="userName" class="form-control" />
+                <span for="userName" class="text-danger"></span>
+            </div> 
+            <div class="form-group">
+                <label for="Password" class="control-label">Parola</label>
+                <input name="Password" type="password" class="form-control" />
+                <span for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox"/>Beni unutma
+                </label>
+            </div>
+            <div class="form-group">
+                <input style="color:#212121;" type="submit" value="Giriş Yap" class="btn btn2-primary" />
+            </div>
+        </form>
+    </div>
+</div>

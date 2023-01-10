@@ -1,0 +1,143 @@
+﻿@using bubisanat.Data
+@using Microsoft.EntityFrameworkCore
+@inject ApplicationDbContext context
+@{
+    //access db
+    List<TopCategory> topCategories = context.TopCategories.Include(t => t.Categories).ToList();
+    List<Category> categories = context.Categories.Where(c => c.TopCategoryId == null).ToList();
+}
+<!DOCTYPE html>
+<html onclick="otherclose()" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]BubiSanat | Düşünen ve üreten herkes için bir soluklanma alanı!</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/bubisanat.styles.css" asp-append-version="true" />
+	<link href="~/font-awesome/css/all.css" rel="stylesheet" />
+	<link href="~/font-awesome/css/all.min.css" rel="stylesheet" />
+    <link rel="icon" sizes="192x192" href="https://bubisanat.s3.eu-central-1.amazonaws.com/apple-icon.png">
+
+    <script>
+
+        function ToggleMenu(id) {
+            event.preventDefault();
+            var topcategory = document.getElementById(id);
+            var togglemenu = document.getElementById(id + "-list");
+            var closemenu = document.getElementsByClassName("close");
+            var bcolor = topcategory.style.backgroundColor;
+            topcategory.style.backgroundColor = "rgba(0,0,0,0.2)";
+            topcategory.style.borderRadius="4px";
+            if (togglemenu.style.display != "block") 
+            {
+                for(let i=0; i< closemenu.length;i++)
+                {
+                closemenu[i].style.display = "none";
+                }
+                togglemenu.style.display = "block";
+                
+            }
+            else 
+            {
+                togglemenu.style.display = "none";
+            }
+            event.stopPropagation();
+            setTimeout(()=>{topcategory.style.backgroundColor=bcolor;},300);
+        }
+        function otherclose() {
+            var otherclose = document.getElementsByClassName("close");
+            for (let i = 0; i < otherclose.length; i++) {
+                otherclose[i].style.display = "none";
+            }
+        }
+        
+    </script>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img height="35" src="https://bubisanat.s3.eu-central-1.amazonaws.com/bubisanat_logo.png" alt="bubisanat-logo"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between ">
+                    <ul class="navbar-nav flex-grow-1">
+
+                        @foreach (TopCategory topCategory in topCategories) 
+                        {
+                        <li class="nav-item dropdown-with-icons">
+                                <a class="nav-link text-dark dropdown-toggle" href="" id="topCat-@topCategory.id.ToString()" onclick="ToggleMenu(this.id)"> @topCategory.Name.Trim().ToUpper()</a>
+                                <ul style="display:none" class="close dropdown-menu" id="topCat-@topCategory.id.ToString()-list">
+                                    @foreach (Category category in topCategory.Categories)
+                                    {
+                                        <a class="dropdown-item" asp-controller="Posts" asp-action="Index" asp-route-id="@category.id">@category.Name.Trim()</a>
+                                    }
+                                </ul>
+                        </li>
+                        }
+
+                        @foreach (Category category in categories) 
+                        {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Posts" asp-action="Index"  asp-route-id="@category.id" >@category.Name.Trim().ToUpper()</a>
+                        </li>
+                        }
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="row page-header">
+    <div class="col-md-3 d-none d-md-block"></div>
+    <div id="bubisanat-main-area" class=" container main main-raised col-md-6 col-12">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+    </div>
+        <div class="col-md-3 search-section d-none d-md-block">
+            <div class="card search-card main main-raised">
+                <div class="card-body pt-3">
+                    <form class="simple_form global-search-form" id="right-panel-search-form" novalidate="novalidate" action="/home/arama" accept-charset="UTF-8" method="get">
+                        <div class="form-group hidden search_type"><input class="form-control hidden hidden" name="type" id="right-panel-type-q" autocomplete="off" type="hidden"></div>
+                        <div class="form-group string required search_q bmd-form-group">
+                            <input style="border-left-style: initial;border-right-style: initial;border-top-style: initial;"class="form-control string required" name="q" id="right-panel-search-q" placeholder="BubiSanat'ta ara" type="text">
+                        </div>
+                        <i class="fa fa-search"></i>
+                        <input type="submit" value="Ara" class="btn btn-primary" data-disable-with="Ara">
+                    </form>
+                </div>
+                <div class="card-footer right-section-footer">
+                    <nav>
+                        <ul class="right-section-footer-links">
+                            <li>
+                                <a href="/home/hakkimizda">
+                                    Hakkımızda
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/home/yardim">
+                                    Yardım
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/home/kullaniciSozlesmesi">
+                                    Kullanıcı Sözleşmesi
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

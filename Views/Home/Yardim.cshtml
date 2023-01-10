@@ -1,0 +1,93 @@
+﻿
+@{
+	Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]BubiSanat | Hakkımızda</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/bubisanat.styles.css" asp-append-version="true" />
+    <link href="~/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="~/font-awesome/css/all.min.css" rel="stylesheet" />
+    <link rel="icon" sizes="192x192" href="https://bubisanat.s3.eu-central-1.amazonaws.com/apple-icon.png">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img style="padding-left:40px;" height="35" src="https://bubisanat.s3.eu-central-1.amazonaws.com/bubisanat_logo.png" alt="bubisanat-logo">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapsehkm navbar-collapsehkm">
+                    <ul class="navbar-navhkm ml-autohkm text-white">
+                        <li class="nav-itemhkm">
+                            <a class="nav-linkhkm" rel="tooltip" title="" data-placement="bottom" href="https://t.me/bubisanat" target="_blank" data-original-title="BubiSanat">
+                                <i class="fa fa-telegram"></i><span class="d-inline d-md-none text-capitalize">&nbsp;&nbsp;Telegram</span>
+                            </a>
+                        </li>
+                        <li class="nav-itemhkm">
+                            <a class="nav-linkhkm" rel="tooltip" title="" data-placement="bottom" href="https://twitter.com/bubisanatcom" target="_blank" data-original-title="BubiSanat">
+                                <i class="fa fa-twitter"></i><span class="d-inline d-md-none text-capitalize">&nbsp;&nbsp;Twitter</span>
+                            </a>
+                        </li>
+                        <li class="nav-itemhkm">
+                            <a class="nav-linkhkm" rel="tooltip" title="" data-placement="bottom" href="https://www.instagram.com/bubisanatcom" target="_blank" data-original-title="BubiSanat">
+                                <i class="fa fa-instagram"></i><span class="d-inline d-md-none text-capitalize">&nbsp;&nbsp;Instagram</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="row page-header header-offset">
+    <div class="container d-flex flex-column justify-content-center align-items-center py-3">
+        <h1>Bubi' sanat destek</h1>
+
+        <p>Bu sayfamız yapım aşamasındadır. Lütfen yaşadığınız sorunları <a target="_blank" href="mailto:info@bubisanat.com">info@bubisanat.com</a> e-posta adresi aracılığıyla bize iletiniz.</p>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <nav class="float-left">
+                <ul>
+                    <li>
+                        <a href="/hakkimizda">
+                            Hakkımızda
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/yardim">
+                            Yardım
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/kullanici-sozlesmesi">
+                            Kullanıcı Sözleşmesi
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="copyright float-right">
+                © 2020, <i class="material-icons">favorite</i> ile yapıldı.
+            </div>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

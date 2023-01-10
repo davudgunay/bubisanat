@@ -1,0 +1,100 @@
+﻿@model bubisanat.Models.Post
+
+@{
+    ViewData["Title"] = "Create";
+}
+<script>
+
+    function GetCategory(topCategoryid) {
+        $("#CategoryId").load("@Url.Action("TopCategories","Categories")?topCategoryid=" + topCategoryid.toString());
+    }
+
+    function selectThis(obj) {
+        var selectelems = document.getElementById('NextPostId')
+        for (var i = 0; i < selectelems.length; i++) {
+              selectelems.options[i].disabled = false;
+        }
+        for (var i = 0; i < selectelems.length; i++) {
+            if (selectelems[i].value == obj.value) {
+                selectelems.options[i].disabled = true;
+            }
+        }
+     } 
+     function selectThis2(obj) {
+        var selectelems = document.getElementById('PreviousPostId')
+        for (var i = 0; i < selectelems.length; i++) {
+              selectelems.options[i].disabled = false;
+        }
+        for (var i = 0; i < selectelems.length; i++) {
+            if (selectelems[i].value == obj.value) {
+                selectelems.options[i].disabled = true;
+            }
+        }
+     }
+    
+</script>
+
+<h1>Create</h1>
+
+<h4>Post</h4>
+<hr/>
+<div class="row">
+    <div>
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="AuthorId" type="hidden" value="@ViewData["authorId"]"/>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Category.TopCategoryId" class="control-label"></label>
+                <select asp-for="Category.TopCategoryId" class ="form-control" asp-items="ViewBag.TopCategoryId" onchange="GetCategory(this.value)"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="CategoryId" class="control-label"></label>
+                <select asp-for="CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="PreviousPostId" class="control-label"></label>
+                <select asp-for="PreviousPostId" class="form-control" asp-items="ViewBag.PreviousPostId" onchange="selectThis(this)">
+                    <option value="" selected disabled>Select Post</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="NextPostId" class="control-label"></label>
+                <select asp-for="NextPostId" class="form-control" asp-items="ViewBag.NextPostId" onchange="selectThis2(this)">
+                    <option value="" selected disabled>Select Post</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tags" class="control-label"></label>
+                <input asp-for="Tags" class="form-control" />
+                <span asp-validation-for="Tags" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Content" class="control-label"></label>
+                <textarea asp-for="Content" class="form-control"></textarea>
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FormImage" class="control-label"></label>
+                <input asp-for="FormImage"  class="form-control" />
+                <span asp-validation-for="FormImage" class="text-danger"></span>
+            </div>
+
+            <div style="margin-top:12px;" class="form-group">
+                <input style="font-size:15px;" type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
